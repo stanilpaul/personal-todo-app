@@ -2,30 +2,30 @@ pipeline:
   agent: any
   stages:
     
-    # Job 1: Checkout
+    
     - name: "Checkout Code"
       steps:
         - checkout: scm
         
-    # Job 2: Build
+    
     - name: "Build Docker Image"
       steps:
         - sh: "docker build -t todo-app:${BUILD_NUMBER} ."
         
-    # Job 3: Test
+    
     - name: "Run Tests"
       steps:
         - sh: "npm install"
         - sh: "npm test"
         
-    # Job 4: Deploy
+    
     - name: "Deploy to Staging"
       steps:
         - sh: "docker stop todo-staging || true"
         - sh: "docker rm todo-staging || true"
         - sh: "docker run -d -p 8000:8000 --name todo-staging todo-app:${BUILD_NUMBER}"
         
-    # Job 5: Notification
+    
     - name: "Send Notification"
       steps:
         - slackSend:
