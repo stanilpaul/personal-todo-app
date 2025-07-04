@@ -1,0 +1,15 @@
+// Job 2 : Build
+pipeline {
+    agent any
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                // Récupère les artefacts du job checkout
+                copyArtifacts filter: '**', projectName: 'Checkout_Job', selector: lastSuccessful()
+                
+                sh 'docker build -t todo-app .'
+                archiveArtifacts artifacts: '**', fingerprint: true
+            }
+        }
+    }
+}

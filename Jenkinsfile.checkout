@@ -1,0 +1,12 @@
+// Job 1 : Checkout
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git 'https://github.com/stanilpaul/personal-todo-app.git'
+                archiveArtifacts artifacts: '**', fingerprint: true
+            }
+        }
+    }
+}
