@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Deploy Application') {
             steps {
-                // Récupère les artefacts du job build
-                copyArtifacts filter: '**', projectName: 'Build_Job', selector: lastSuccessful()
-                
+             
                 sh 'docker stop todo-container || true'
                 sh 'docker rm todo-container || true'
                 sh 'docker run -d -p 8000:8000 --name todo-container todo-app'
